@@ -42,9 +42,26 @@ def binary_search(seq, number):
     return None
 
 
+def recursive_binary_search(arr, target, left, right):
+    if left <= right:
+        middle = (left + right) // 2
+
+        if arr[middle] == target:
+            return middle
+        elif arr[middle] < 0:
+            return recursive_binary_search(arr, target, middle + 1, right)
+        else:
+            return recursive_binary_search(arr, target, left, middle - 1)
+
+
 def main(file_name, number):
     sequence = read_data(file_name=file_name, key="ordered_numbers")
 
+    result_idx = recursive_binary_search(sequence, number, 0, len(sequence) - 1)
+    if result_idx is not None:
+        print(f"Číslo {number} bylo nalezeno na indexu {result_idx}.")
+    else:
+        print(f"Číslo {number} nebylo nalezeno v dané sekvenci.")
     # iterative binary search
     binary_search(sequence, number=number)
 
